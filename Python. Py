@@ -1,0 +1,38 @@
+from math import floor, sqrt
+from typing import Tuple
+
+
+def divisor_count(x: int) -> int:
+   
+    root = sqrt(x)
+    count = 0
+    mid = floor(root)+1
+    for y in range(1, mid):
+        if x % y == 0:
+            count += 2
+    if root == int(root):   # in order not to double-count square root
+        count -= 1
+    return count
+
+
+def main(divisor: int) -> Tuple[int, int, int]:
+    
+    assert type(divisor) == int and divisor > 0
+
+    n = 0
+    nth_triangular = 0
+    divcount = 0     #is the actual number of divisors of nth_triangular
+    while divcount <= divisor:
+        n += 1
+        nth_triangular += n
+        divcount = divisor_count(nth_triangular)
+    return n, nth_triangular,divcount 
+
+
+if __name__ == '__main__':
+    divisors = int(input('Enter a natural number: '))
+    num, tri_num, divisor_count = main(divisors)
+    print('First triangular number with over {} divisors:'.format(divisors))
+    print('  n              = {}'.format(num))
+    print('  nth_triangular = {}'.format(tri_num))
+    print('  Divisors       = {}'.format(divisor_count))
